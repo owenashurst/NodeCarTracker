@@ -1,5 +1,6 @@
 const gpsd = require("node-gpsd");
 const log = require("./log");
+const config = require('./config');
 
 let gpsLocationData = [];
 let lastSentLocation = {};
@@ -8,7 +9,7 @@ startLoggingGpsAndPostLocationToServer = () => {
     try {
         const daemon = new gpsd.Daemon({
         program: "gpsd",
-        device: "/dev/ttyAMC0",
+        device: config.GpsDevice,
         port: 2947,
         pid: "/tmp/gpsd.pid",
         readOnly: false,
@@ -42,7 +43,6 @@ startLoggingGpsAndPostLocationToServer = () => {
         });
         listener.watch();
         listener.on("TPV", gpsData => {
-            //log.debug(gpsData);
             gpsLocationData.push(gpsData);
         });
     } catch (message) {

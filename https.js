@@ -1,13 +1,15 @@
 const https = require('https');
 const log = require("./log");
+const config = require('./config');
 
 uploadLocationToServer = (dataToPost) => {
     const postOptions = {
-        host: "cartracker.owenashurst.com",
-        path: "/api/location",
+        host: config.ApiUrl,
+        path: config.ApiUrlEndpoint,
         method: "POST",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "x-api-key": config.AwsApiGatewayApiKey
         }
     };
 
