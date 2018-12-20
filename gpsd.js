@@ -57,14 +57,14 @@ const checkIfVehicleHasMoved = () => {
 
         const latestLocation = getLatestLocation();
 
-        const latestLongitudeLocationNearest = Math.floor(latestLocation.lon * 1000);
-        const lastSentLongitudeLocationNearest = Math.floor(lastSentLocation.lon * 1000);
+        const latestLongitudeLocationNearest = Math.floor(latestLocation.lon * 10000);
+        const lastSentLongitudeLocationNearest = Math.floor(lastSentLocation.lon * 10000);
         const hasLongitudeDiffered = latestLongitudeLocationNearest !== lastSentLongitudeLocationNearest;
 
         log.debug(`Last sent longitude: ${lastSentLongitudeLocationNearest} | Latest longitude: ${latestLongitudeLocationNearest}`)
 
-        const latestLatitudeLocationNearest = Math.floor(latestLocation.lat * 1000);
-        const lastSentLatitudeLocationNearest = Math.floor(lastSentLocation.lat * 1000);
+        const latestLatitudeLocationNearest = Math.floor(latestLocation.lat * 10000);
+        const lastSentLatitudeLocationNearest = Math.floor(lastSentLocation.lat * 10000);
         const hasLatitudeDiffered = latestLatitudeLocationNearest !== lastSentLatitudeLocationNearest;
 
         log.debug(`Last sent latitude: ${lastSentLatitudeLocationNearest} | Latest latitude: ${latestLatitudeLocationNearest}`)
