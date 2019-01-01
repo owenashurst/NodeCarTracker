@@ -5,7 +5,7 @@ const config = require('./config');
 let gpsLocationData = [];
 let lastSentLocation = {};
 
-startLoggingGpsAndPostLocationToServer = () => {
+const startLoggingGps = () => {
     try {
         const daemon = new gpsd.Daemon({
         program: "gpsd",
@@ -85,20 +85,20 @@ const getLatestLocation = () => {
     return gpsLocationData[gpsLocationData.length - 1];
 };
 
-updateLatestSentLocation = (latestLocationData) => {
+const updateLatestSentLocation = (latestLocationData) => {
     lastSentLocation = latestLocationData;
 };
 
-clearLocationDataFromArray = () => {
+const clearLocationDataFromArray = () => {
     gpsLocationData = [];  
 };
 
 module.exports = {
-  startLoggingGpsAndPostLocationToServer,
-  checkIfVehicleHasMoved,
-  getLatestLocation,
-  clearLocationDataFromArray,
-  updateLatestSentLocation,
-  gpsLocationData,
-  lastSentLocation
+    startLoggingGps,
+    checkIfVehicleHasMoved,
+    getLatestLocation,
+    clearLocationDataFromArray,
+    updateLatestSentLocation,
+    gpsLocationData,
+    lastSentLocation
 };

@@ -3,17 +3,17 @@ const log = require("./log");
 const https = require("./https");
 
 try {
-    gpsd.startLoggingGpsAndPostLocationToServer();
+    gpsd.startLoggingGps();
 
-    setInterval(() => {
-        init();
+    setInterval(async () => {
+        await init();
     }, 60000);
 } catch (message) {
     log.error(`Unhandled exception. ${message}`);
     return new Error(message);
 }
 
-function init() {
+const init = async () => {
     try {
         const latestLocationData = gpsd.getLatestLocation();
         if (latestLocationData === undefined) return;
@@ -21,10 +21,10 @@ function init() {
         const hasMoved = gpsd.checkIfVehicleHasMoved();
         if (!hasMoved) return;
 
-        https.uploadLocationToServer(JSON.stringify(latestLocationData));
+        await https.uploadLocationToServer(JSON.stringify(latestLocationData));
+        await https.retryFailedUploads();
 
         gpsd.updateLatestSentLocation(latestLocationData);
-        
         gpsd.clearLocationDataFromArray();
     }
     catch (message) {
