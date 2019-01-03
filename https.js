@@ -16,7 +16,7 @@ const retryFailedUploads = async () => {
         const response = await uploadLocationToServer(failedUpload);
         if (response) {
             // Removes the item from the array if the POST was successful
-            failedUploads.filter((dataInArray) => {
+            failedUploads.filter(dataInArray => {
                 return dataInArray == failedUpload;
             });
         }
@@ -25,8 +25,8 @@ const retryFailedUploads = async () => {
 
 const uploadLocationToServer = async (dataToPost) => {
     const postOptions = {
-        host: config.ApiUrl,
-        path: config.ApiUrlEndpoint,
+        host: config.AwsApiUrl,
+        path: config.AwsApiUrlEndpoint,
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -49,7 +49,7 @@ const uploadLocationToServer = async (dataToPost) => {
             });
 
             httpRequest.on('error', () => {
-                failedUploads.push(dataToPost);
+                addToFailedUploads(dataToPost);
             });
             httpRequest.write(dataToPost);
             httpRequest.end();
@@ -58,6 +58,14 @@ const uploadLocationToServer = async (dataToPost) => {
         log.error(`Unable to post data to server. ${message}`);
         throw new Error(message);
     }
+};
+
+const addToFailedUploads = (dataToPost) => {
+    try {
+        if (failedUploads.filter(u => u.GpsDateTime === dataToPost.GpsDateTime).length === 0) {
+            failedUploads.push(dataToPost);
+        }
+    } catch {}
 };
 
 module.exports = {
