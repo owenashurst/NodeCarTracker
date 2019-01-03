@@ -62,7 +62,7 @@ const uploadLocationToServer = async (dataToPost) => {
 
 const addToFailedUploads = (dataToPost) => {
     try {
-        if (failedUploads.filter(u => u.GpsDateTime === dataToPost.GpsDateTime).length === 0) {
+        if (failedUploads.filter(u => u.time === dataToPost.time).length === 0) {
             failedUploads.push(dataToPost);
         }
     } catch (message) {
