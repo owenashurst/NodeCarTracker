@@ -1,16 +1,20 @@
 const gpsd = require('./gpsd');
 const log = require("./log");
 const https = require("./https");
+const mongoDb = require('./monogdb');
 
-try {
-    gpsd.startLoggingGps();
+const start = async () => {
+    try {
+        gpsd.startLoggingGps();
 
-    setInterval(async () => {
-        await init();
-    }, 60000);
-} catch (message) {
-    log.error(`Unhandled exception. ${message}`);
-    return new Error(message);
+        await mongoDb.init();
+
+        setInterval(async () => {
+            await init();
+        }, 60000);
+    } catch (message) {
+        log.error(`Unhandled exception. ${message}`);
+    }
 }
 
 const init = async () => {
@@ -24,6 +28,8 @@ const init = async () => {
         await https.uploadLocationToServer(JSON.stringify(latestLocationData));
         await https.retryFailedUploads();
 
+        await mongoDb.insertLatestLocationToDb(latestLocationData);
+
         gpsd.updateLatestSentLocation(latestLocationData);
         gpsd.clearLocationDataFromArray();
     }
@@ -31,3 +37,5 @@ const init = async () => {
         log.error(`Unable to upload location data to server. ${message}`)
     }
 };
+
+start();

@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "mongodb": "^3.1.10",
     "node-gpsd": "^0.3.0"
   }
 }
