@@ -65,7 +65,9 @@ const addToFailedUploads = (dataToPost) => {
         if (failedUploads.filter(u => u.GpsDateTime === dataToPost.GpsDateTime).length === 0) {
             failedUploads.push(dataToPost);
         }
-    } catch {}
+    } catch (message) {
+        log.error(`Unable to add data to failedUploads array. ${message}`);
+    }
 };
 
 module.exports = {
