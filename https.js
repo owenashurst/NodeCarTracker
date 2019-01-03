@@ -16,9 +16,7 @@ const retryFailedUploads = async () => {
         const response = await uploadLocationToServer(failedUpload);
         if (response) {
             // Removes the item from the array if the POST was successful
-            failedUploads.filter(dataInArray => {
-                return dataInArray == failedUpload;
-            });
+            failedUploads.filter(dataInArray => dataInArray !== failedUpload);
         }
     });
 }
@@ -61,8 +59,10 @@ const uploadLocationToServer = async (dataToPost) => {
 };
 
 const addToFailedUploads = (dataToPost) => {
+    log.info('Log failed to upload.');
     try {
         if (failedUploads.filter(u => u.time === dataToPost.time).length === 0) {
+            log.info('Adding location to Failed Uploads.');
             failedUploads.push(dataToPost);
         }
     } catch (message) {
