@@ -25,7 +25,8 @@ const insertIntoCollection = (data) => {
             });
         }
         catch (errorMessage) {
-            log.error(`Unable to insert data into collection. ${errorMessage}`)
+            log.error(`Unable to insert data into collection. ${errorMessage}`);
+            reject(errorMessage);
         }
     });
 }
@@ -45,7 +46,8 @@ const createCollection = () => {
             });
         }
         catch (errorMessage) {
-            log.error(`Unable to create collection. ${errorMessage}`)
+            log.error(`Unable to create collection. ${errorMessage}`);
+            reject(errorMessage);
         }
     });
 }
@@ -65,7 +67,8 @@ const deleteAllCollectionData = () => {
             });
         }
         catch (errorMessage) {
-            log.error(`Unable to wipe collection data. ${errorMessage}`)
+            log.error(`Unable to wipe collection data. ${errorMessage}`);
+            reject(errorMessage);
         }
     });
 };
