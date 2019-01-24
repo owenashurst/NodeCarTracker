@@ -26,7 +26,6 @@ const init = async () => {
         if (!hasMoved) return;
 
         await https.uploadLocationToServer(JSON.stringify(latestLocationData));
-        await https.retryFailedUploads();
 
         await mongoDb.insertLatestLocationToDb(latestLocationData);
 
