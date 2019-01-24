@@ -25,7 +25,16 @@ const init = async () => {
         const hasMoved = gpsd.checkIfVehicleHasMoved();
         if (!hasMoved) return;
 
-        await https.uploadLocationToServer(JSON.stringify(latestLocationData));
+        let retrycount = 0;
+        while (retrycount < 5) {
+            try {
+                await https.uploadLocationToServer(JSON.stringify(latestLocationData));
+                break;
+            }
+            catch {
+                retrycount++;
+            }
+        }
 
         await mongoDb.insertLatestLocationToDb(latestLocationData);
 
