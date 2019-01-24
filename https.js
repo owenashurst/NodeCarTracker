@@ -37,6 +37,5 @@ const uploadLocationToServer = async (dataToPost) => {
 };
 
 module.exports = {
-    uploadLocationToServer,
-    retryFailedUploads
+    uploadLocationToServer
 };
