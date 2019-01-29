@@ -25,15 +25,22 @@ const init = async () => {
         const hasMoved = gpsd.checkIfVehicleHasMoved();
         if (!hasMoved) return;
 
-        let retrycount = 0;
-        while (retrycount <= 5) {
+        const maxRetryCount = 5;
+        let retryCount = 0;
+        while (retryCount <= maxRetryCount) {
             try {
                 await https.uploadLocationToServer(JSON.stringify(latestLocationData));
                 break;
             }
-            catch {
-                log.error(`Uploading location to server failed. Retrying... ${retrycount}/5 attempts`);
-                retrycount++;
+            catch (ex) {
+                log.error(`Uploading location to server failed. Retrying... ${retryCount}/5 attempts`);
+
+                if (retryCount == maxRetryCount) {
+                    log.error(`Retry count exceeded. Unable to upload location to server. ${ex}`);
+                    break;
+                }
+
+                retryCount++;
             }
         }
 
