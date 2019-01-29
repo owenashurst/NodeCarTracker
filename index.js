@@ -26,12 +26,13 @@ const init = async () => {
         if (!hasMoved) return;
 
         let retrycount = 0;
-        while (retrycount < 5) {
+        while (retrycount <= 5) {
             try {
                 await https.uploadLocationToServer(JSON.stringify(latestLocationData));
                 break;
             }
             catch {
+                log.error(`Uploading location to server failed. Retrying... ${retrycount}/5 attempts`);
                 retrycount++;
             }
         }
