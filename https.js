@@ -19,16 +19,16 @@ const uploadLocationToServer = async (dataToPost) => {
         
         const httpRequest = https.request(postOptions, (res) => {
             let body = '';
-            
+
             res.on('data', (chunk) => {
                 body += chunk;
             });
 
             if (res.statusCode !== 200) {
-                log.info('Successfully uploaded location to server.');
+                log.error(`Unsuccessful attempt at uploading location to server. Status Code: ${res.statusCode} | Message: ${body} | Status Message: ${res.statusMessage}`);
                 reject(false);
             } else {
-                log.error(`Unsuccessful attempt at uploading location to server. Status Code: ${res.statusCode}. Message: ${body}`);
+                log.info('Successfully uploaded location to server.');
                 resolve(true);
             }
         });
