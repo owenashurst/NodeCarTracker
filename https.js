@@ -16,18 +16,19 @@ const uploadLocationToServer = async (dataToPost) => {
 
         log.info('Posting location to server...');
         log.debug(dataToPost);
-
         
         const httpRequest = https.request(postOptions, (res) => {
             if (res.statusCode !== 200) {
+                log.info('Successfully uploaded location to server.');
                 reject(false);
             } else {
+                log.error(`Unsuccessful attempt at uploading location to server. Status Code: ${res.statusCode}`);
                 resolve(true);
             }
         });
 
-        httpRequest.setTimeout(10000, () => {  
-            log.error('Uploading location to server timed out.');
+        httpRequest.on('error', (error) => {
+            log.error(`Unsuccessful attempt at uploading location to server. ${error}`);
             reject(false);
         });
 
