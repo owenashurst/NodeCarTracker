@@ -13,7 +13,6 @@ module.exports = {
     GpsDevice,
     AwsApiUrl,
     AwsApiUrlEndpoint,
-    AwsApiGatewayApiKey,
     MongoDbConnectionUrl,
     MongoDbDatabase,
     MongoDbCollection,
