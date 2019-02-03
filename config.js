@@ -8,7 +8,7 @@ const MongoDbConnectionUrl = 'mongodb://localhost:27017';
 const MongoDbDatabase = 'CarTracker';
 const MongoDbCollection = 'LocationHistory';
 
-const userId = 'owen';
+const userId = 'some-user-id';
 
 module.exports = {
     GpsDevice,
