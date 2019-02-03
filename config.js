@@ -8,6 +8,8 @@ const MongoDbConnectionUrl = 'mongodb://localhost:27017';
 const MongoDbDatabase = 'CarTracker';
 const MongoDbCollection = 'LocationHistory';
 
+const userId = 'owen';
+
 module.exports = {
     GpsDevice,
     AwsApiUrl,
@@ -15,5 +17,6 @@ module.exports = {
     AwsApiGatewayApiKey,
     MongoDbConnectionUrl,
     MongoDbDatabase,
-    MongoDbCollection
+    MongoDbCollection,
+    userId
 };

@@ -2,6 +2,7 @@ const gpsd = require('./gpsd');
 const log = require("./log");
 const https = require("./https");
 const mongoDb = require('./monogdb');
+const config = require('./config');
 
 const start = async () => {
     try {
@@ -21,6 +22,8 @@ const init = async () => {
     try {
         const latestLocationData = gpsd.getLatestLocation();
         if (latestLocationData === undefined) return;
+
+        latestLocationData.userId = config.userId;
 
         const hasMoved = gpsd.checkIfVehicleHasMoved();
         if (!hasMoved) return;
