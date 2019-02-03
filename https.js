@@ -9,8 +9,7 @@ const uploadLocationToServer = async (dataToPost) => {
             path: config.AwsApiUrlEndpoint,
             method: "POST",
             headers: {
-                "Content-Type": "application/json",
-                "x-api-key": config.AwsApiGatewayApiKey
+                "Content-Type": "application/json"
             }
         };
 
