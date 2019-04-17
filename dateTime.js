@@ -5,7 +5,10 @@ const convertDateTimeToEpoch = (dateTime) => {
 };
 
 const generateTimeToLiveDateTime = () => {
-    const dateTime = new Date();
+    const dateTime = new Date().toLocaleString('en-GB', {
+        timeZone: 'Europe/London'
+    });
+
     dateTime.setDate(dateTime.getDate() + config.AwsDynamoTableRecordExpireInDays);
     
     return convertDateTimeToEpoch(dateTime);
