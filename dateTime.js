@@ -6,10 +6,9 @@ const convertDateTimeToEpoch = (dateTime) => {
 
 const generateTimeToLiveDateTime = () => {
     const dateTime = new Date();
-    dateTime.setDate(dateTime.getDate() + 5);
-    const dateTimeInUtc = dateTime.getTime() - (dateTime.getTimezoneOffset() * 60 * 1000);
-
-    return convertDateTimeToEpoch(dateTimeInUtc);
+    dateTime.setDate(dateTime.getDate() + config.AwsDynamoTableRecordExpireInDays);
+    
+    return convertDateTimeToEpoch(dateTime);
 };
 
 module.exports = {
