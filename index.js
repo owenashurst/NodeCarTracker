@@ -21,12 +21,12 @@ const start = async () => {
 
 const init = async () => {
     try {
-        const hasMoved = gpsd.checkIfVehicleHasMoved();
-        if (!hasMoved) return;
-
         const latestLocationData = gpsd.getLatestLocation();
 
-        if (latestLocationData === undefined) return;
+        if (!latestLocationData) return;
+
+        const hasMoved = gpsd.checkIfVehicleHasMoved();
+        if (!hasMoved) return;
 
         latestLocationData.expire = dateTime.generateTimeToLiveDateTime();
         latestLocationData.userId = config.userId;
