@@ -21,15 +21,15 @@ const start = async () => {
 
 const init = async () => {
     try {
+        const hasMoved = gpsd.checkIfVehicleHasMoved();
+        if (!hasMoved) return;
+
         const latestLocationData = gpsd.getLatestLocation();
 
         if (latestLocationData === undefined) return;
 
         latestLocationData.expire = dateTime.generateTimeToLiveDateTime();
         latestLocationData.userId = config.userId;
-
-        const hasMoved = gpsd.checkIfVehicleHasMoved();
-        if (!hasMoved) return;
 
         const maxRetryCount = 5;
         let retryCount = 0;
