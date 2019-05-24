@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "mongodb": "^2.2.33",
+    "chokidar": "^2.0.4",
     "node-gpsd": "^0.3.0"
   }
 }

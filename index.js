@@ -1,15 +1,15 @@
 const gpsd = require('./gpsd');
 const log = require("./log");
 const https = require("./https");
-const mongoDb = require('./monogdb');
 const config = require('./config');
 const dateTime = require('./dateTime');
+const smsWatcher = require('./SMS/index');
 
 const start = async () => {
     try {
         gpsd.startLoggingGps();
 
-        await mongoDb.init();
+        smsWatcher.initSmsWatcher();
 
         setInterval(async () => {
             await init();
@@ -49,8 +49,6 @@ const init = async () => {
                 retryCount++;
             }
         }
-
-        await mongoDb.insertLatestLocationToDb(latestLocationData);
 
         gpsd.updateLatestSentLocation(latestLocationData);
         gpsd.clearLocationDataFromArray();
