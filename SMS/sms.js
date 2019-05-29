@@ -25,14 +25,13 @@ const processSmsAction = async (phoneNumber, smsMessage) => {
 
             log.info('Car location requested. Replying...');
 
-            const latestLocationReceived = gpsd.getLatestLocation();
+            const latestLocationReceived = gpsd.lastSentLocation();
 
             let messageToSend = '';
 
-            if (!latestLocationReceived || !latestLocationReceived.data) {
+            if (!latestLocationReceived) {
                 messageToSend = 'No location has been recorded as of yet. Please try again later.'
             } else {
-                const latestLocation = latestLocationReceived.data;
                 messageToSend = 
                 `See where your vehicle is on Google Maps: http:\/\/maps.google.com\/?q=${latestLocation.lat.toString()},${latestLocation.lon.toString()} \n\n` +
                 `Last location received on ${new Date(Date.parse(latestLocation.time)).toGMTString()}.`;
