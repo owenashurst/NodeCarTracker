@@ -85,11 +85,16 @@ const getLatestLocation = () => {
     return gpsLocationData[gpsLocationData.length - 1];
 };
 
+const getLastSentLocation = () => {
+    return lastSentLocation;
+};
+
 const updateLatestSentLocation = (latestLocationData) => {
+    log.info('Updating last sent location');
     lastSentLocation = latestLocationData;
 };
 
-const clearLocationDataFromArray = () => {
+const clearLocationData = () => {
     gpsLocationData = [];  
 };
 
@@ -97,8 +102,7 @@ module.exports = {
     startLoggingGps,
     checkIfVehicleHasMoved,
     getLatestLocation,
-    clearLocationDataFromArray,
-    updateLatestSentLocation,
-    gpsLocationData,
-    lastSentLocation
+    getLastSentLocation,
+    clearLocationData,
+    updateLatestSentLocation
 };

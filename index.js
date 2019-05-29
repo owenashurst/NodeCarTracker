@@ -51,7 +51,7 @@ const init = async () => {
         }
 
         gpsd.updateLatestSentLocation(latestLocationData);
-        gpsd.clearLocationDataFromArray();
+        gpsd.clearLocationData();
     }
     catch (message) {
         log.error(`Unable to upload location data to server. ${message}`)
