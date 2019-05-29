@@ -25,7 +25,7 @@ const processSmsAction = async (phoneNumber, smsMessage) => {
 
             log.info('Car location requested. Replying...');
 
-            const latestLocationReceived = gpsd.lastSentLocation();
+            const latestLocationReceived = gpsd.lastSentLocation;
 
             let messageToSend = '';
 
