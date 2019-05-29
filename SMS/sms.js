@@ -29,7 +29,7 @@ const processSmsAction = async (phoneNumber, smsMessage) => {
 
             let messageToSend = '';
 
-            if (latestLocation.length === 0) {
+            if (Object.keys(latestLocation).length === 0) {
                 messageToSend = 'No location has been recorded as of yet. Please try again later.'
             } else {
                 messageToSend = 
