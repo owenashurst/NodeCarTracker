@@ -6,9 +6,15 @@ let lastSentLocation = {};
 
 const startLoggingGps = () => {
     try {
-        const gpsPipe = spawn('gpspipe', ['-w']);
-        gpsPipe.stdout.on('data', (data) => {
-            gpsLocationData.push(JSON.parse(data));
+        const gpsPipe = spawn('gpspipe', ['-w'], {maxBuffer: 1024 * 500});
+        gpsPipe.stdout.setEncoding('utf8');
+        gpsPipe.stdout.on('data', (gpsData) => {
+            try {
+                const data = JSON.parse(gpsData);
+                if (data.class === 'TPV') {
+                    gpsLocationData.push(data);
+                }
+            } catch(error){}
         });
     } catch (error) {
       log.error(error);
