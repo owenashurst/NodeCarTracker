@@ -9,7 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "chokidar": "^2.0.4",
-    "node-gpsd": "^0.3.0"
+    "chokidar": "^2.0.4"
   }
 }

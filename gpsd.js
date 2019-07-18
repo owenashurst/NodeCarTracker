@@ -1,53 +1,18 @@
-const gpsd = require("node-gpsd");
 const log = require("./log");
-const config = require('./config');
+const { spawn } = require('child_process');
 
 let gpsLocationData = [];
 let lastSentLocation = {};
 
 const startLoggingGps = () => {
     try {
-        const daemon = new gpsd.Daemon({
-        program: "gpsd",
-        device: config.GpsDevice,
-        port: 2947,
-        pid: "/tmp/gpsd.pid",
-        readOnly: false,
-        logger: {
-            info: () => {},
-            warn: console.warn,
-            error: console.error
-        }
+        const gpsPipe = spawn('gpspipe', ['-w']);
+        gpsPipe.stdout.on('data', (data) => {
+            gpsLocationData.push(JSON.parse(data));
         });
-        daemon.start(() => {
-        log.info("Daemon Started.");
-        });
-    } catch (message) {
-      log.error(message);
-      throw new Error(`Unable to start daemon. ${message}`);
-    }
-
-    try {
-        const listener = new gpsd.Listener({
-            port: 2947,
-            hostname: "localhost",
-            logger: {
-            info: function() {},
-            warn: console.warn,
-            error: console.error
-            },
-            parse: true
-        });
-        listener.connect(() => {
-            log.info("Listener Connected.");
-        });
-        listener.watch();
-        listener.on("TPV", gpsData => {
-            gpsLocationData.push(gpsData);
-        });
-    } catch (message) {
-        log.error(message);
-        throw new Error(`Unable to start listener. ${message}`);
+    } catch (error) {
+      log.error(error);
+      throw new Error(`Unable to start gpspipe or parse data: ${error}`);
     }
 }
 
