@@ -1,5 +1,5 @@
 const AwsApiUrl = 'jpc905lswi.execute-api.eu-west-1.amazonaws.com';
-const AwsApiUrlEndpoint = '/Live/location';
+const AwsApiUrlEndpoint = '/live/location';
 
 const AwsDynamoTableRecordExpireInDays = 5;
 

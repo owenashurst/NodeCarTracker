@@ -13,7 +13,7 @@ const uploadLocationToServer = async (dataToPost) => {
             }
         };
 
-        log.info('Posting location to server...');
+        log.info('Uploading location to server...');
         log.debug(dataToPost);
         
         const httpRequest = https.request(postOptions, (res) => {
@@ -24,16 +24,16 @@ const uploadLocationToServer = async (dataToPost) => {
             });
 
             if (res.statusCode !== 200) {
-                log.error(`Unsuccessful attempt at uploading location to server. Status Code: ${res.statusCode} | Message: ${body} | Status Message: ${res.statusMessage}`);
+                log.error(`Error when uploading location to server. Status Code: ${res.statusCode} Message: ${body} Status Message: ${res.statusMessage}`);
                 reject(false);
             } else {
-                log.info('Successfully uploaded location to server.');
+                log.info('Successfully uploaded location to server');
                 resolve(true);
             }
         });
 
         httpRequest.on('error', (error) => {
-            log.error(`Unsuccessful attempt at uploading location to server. ${error}`);
+            log.error(`Error when uploading location to server. Error: ${error}`);
             reject(false);
         });
 

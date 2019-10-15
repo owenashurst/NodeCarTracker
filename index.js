@@ -3,7 +3,11 @@ const log = require("./log");
 const https = require("./https");
 const config = require('./config');
 const dateTime = require('./dateTime');
-const smsWatcher = require('./SMS/index');
+const smsWatcher = require('./sms/index');
+
+const wait = (ms) => {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+};
 
 const start = async () => {
     try {
@@ -28,7 +32,7 @@ const init = async () => {
         const hasMoved = gpsd.checkIfVehicleHasMoved();
         if (!hasMoved) return;
 
-        latestLocationData.expire = dateTime.generateTimeToLiveDateTime();
+        latestLocationData.expiry = dateTime.generateTimeToLiveDateTime();
         latestLocationData.userId = config.userId;
 
         const maxRetryCount = 5;
@@ -40,6 +44,8 @@ const init = async () => {
             }
             catch (ex) {
                 log.error(`Uploading location to server failed. Retrying... ${retryCount}/5 attempts`);
+
+                await wait(5000);
 
                 if (retryCount == maxRetryCount) {
                     log.error(`Retry count exceeded. Unable to upload location to server. ${ex}`);
