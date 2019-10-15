@@ -3,7 +3,7 @@ const log = require("./log");
 const https = require("./https");
 const config = require('./config');
 const dateTime = require('./dateTime');
-const smsWatcher = require('./sms/index');
+const smsWatcher = require('./SMS/index');
 
 const wait = (ms) => {
     return new Promise((resolve) => setTimeout(resolve, ms));
