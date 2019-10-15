@@ -44,7 +44,7 @@ const init = async () => {
                 break;
             }
             catch (ex) {
-                log.error(`Uploading location to server failed. Retrying... ${retryCount}/5 attempts`);
+                log.error(`Error when uploading location. Retrying... ${retryCount}/5 attempts`);
 
                 await wait(5000);
 
