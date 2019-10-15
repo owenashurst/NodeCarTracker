@@ -44,8 +44,6 @@ const processSmsAction = async (phoneNumber, smsMessage) => {
             sendSms(phoneNumber, 'Messsage did not match any action. Try saying \'Where is my car\'.');
         }
 
-        log.info('Message sent.');
-
     } catch (errorMessage) {
         log.error(`An error occured when attempting to process sms action. ${errorMessage}`);
     }

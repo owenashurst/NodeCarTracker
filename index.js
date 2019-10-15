@@ -11,6 +11,7 @@ const wait = (ms) => {
 
 const start = async () => {
     try {
+        log.info('Starting GPS Tracker...');
         gpsd.startLoggingGps();
 
         smsWatcher.initSmsWatcher();
