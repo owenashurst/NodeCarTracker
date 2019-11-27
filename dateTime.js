@@ -8,7 +8,7 @@ const generateTimeToLiveDateTime = () => {
     const dateTime = new Date();
     dateTime.setDate(dateTime.getDate() + config.AwsDynamoTableRecordExpireInDays);
     
-    return convertDateTimeToEpoch(dateTime);
+    return parseInt(convertDateTimeToEpoch(dateTime));
 };
 
 module.exports = {
