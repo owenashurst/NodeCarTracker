@@ -70,7 +70,7 @@ const processLatestGpsData = async () => {
         gpsd.updateLatestSentLocation(latestLocationData);
         gpsd.clearLocationData();
     }
-    catch (message) {
+    catch (error) {
         log.error(`Unable to upload location data to server. Error: ${JSON.stringify(error)} Stack: ${error.stack}`)
     }
 };
