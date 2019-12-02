@@ -4,7 +4,7 @@ const config = require('./config');
 const uploadLocationToServer = async (dataToPost) => {
     return new Promise((resolve, reject) => {
         const postOptions = {
-            host: config.AWS.API_ENDPOINT,
+            host: config.AWS.API_URL,
             path: config.AWS.API_ENDPOINT,
             method: "POST",
             headers: {
