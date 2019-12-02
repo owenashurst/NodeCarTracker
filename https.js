@@ -1,20 +1,16 @@
 const https = require('https');
-const log = require("./log");
 const config = require('./config');
 
 const uploadLocationToServer = async (dataToPost) => {
     return new Promise((resolve, reject) => {
         const postOptions = {
-            host: config.AwsApiUrl,
-            path: config.AwsApiUrlEndpoint,
+            host: config.AWS.API_ENDPOINT,
+            path: config.AWS.API_ENDPOINT,
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             }
         };
-
-        log.info('Uploading location to server...');
-        log.debug(dataToPost);
         
         const httpRequest = https.request(postOptions, (res) => {
             let body = '';
@@ -24,17 +20,14 @@ const uploadLocationToServer = async (dataToPost) => {
             });
 
             if (res.statusCode !== 200) {
-                log.error(`Error when uploading location to server. Status Code: ${res.statusCode} Message: ${body} Status Message: ${res.statusMessage}`);
                 reject(false);
             } else {
-                log.info('Successfully uploaded location to server');
-                resolve(true);
+                resolve(body);
             }
         });
 
         httpRequest.on('error', (error) => {
-            log.error(`Error when uploading location to server. Error: ${error}`);
-            reject(false);
+            reject(error);
         });
 
         httpRequest.write(dataToPost);

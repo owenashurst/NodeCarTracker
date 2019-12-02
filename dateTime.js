@@ -6,7 +6,7 @@ const convertDateTimeToEpoch = (dateTime) => {
 
 const generateTimeToLiveDateTime = () => {
     const dateTime = new Date();
-    dateTime.setDate(dateTime.getDate() + config.AwsDynamoTableRecordExpireInDays);
+    dateTime.setDate(dateTime.getDate() + config.AWS.AWS_DB_EXPIRY);
     
     return parseInt(convertDateTimeToEpoch(dateTime));
 };

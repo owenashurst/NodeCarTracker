@@ -1,4 +1,4 @@
-const log = require("./log");
+const log = require('./log');
 const { spawn } = require('child_process');
 
 let gpsLocationData = [];
@@ -11,7 +11,14 @@ const startLoggingGps = () => {
         gpsPipe.stdout.on('data', (gpsData) => {
             try {
                 const data = JSON.parse(gpsData);
-                if (data.class === 'TPV') {
+                if (data.class === 'TPV' && 
+                    data.lat && 
+                    data.lon && 
+                    data.speed && 
+                    data.climb && 
+                    data.alt && 
+                    data.time
+                ) {
                     gpsLocationData.push(data);
                 }
             } catch(error){}
@@ -19,34 +26,6 @@ const startLoggingGps = () => {
     } catch (error) {
       log.error(error);
       throw new Error(`Unable to start gpspipe or parse data: ${error}`);
-    }
-}
-
-const checkIfVehicleHasMoved = () => {
-    try {
-        if (Object.keys(lastSentLocation).length === 0) return true;
-
-        const latestLocation = getLatestLocation();
-
-        const latestLongitudeLocationNearest = Math.floor(latestLocation.lon * 10000);
-        const lastSentLongitudeLocationNearest = Math.floor(lastSentLocation.lon * 10000);
-        const hasLongitudeDiffered = latestLongitudeLocationNearest !== lastSentLongitudeLocationNearest;
-
-        log.debug(`Last sent longitude: ${lastSentLongitudeLocationNearest} | Latest longitude: ${latestLongitudeLocationNearest}`)
-
-        const latestLatitudeLocationNearest = Math.floor(latestLocation.lat * 10000);
-        const lastSentLatitudeLocationNearest = Math.floor(lastSentLocation.lat * 10000);
-        const hasLatitudeDiffered = latestLatitudeLocationNearest !== lastSentLatitudeLocationNearest;
-
-        log.debug(`Last sent latitude: ${lastSentLatitudeLocationNearest} | Latest latitude: ${latestLatitudeLocationNearest}`)
-
-        log.info(`Vehicle moved: ${hasLongitudeDiffered && hasLatitudeDiffered}`);
-        
-        return hasLongitudeDiffered && hasLatitudeDiffered;
-    }
-    catch (message) {
-        log.error(`Unable to determine if vehicle has moved. ${message}`);
-        throw new Error(message);
     }
 }
 
@@ -71,7 +50,6 @@ const clearLocationData = () => {
 
 module.exports = {
     startLoggingGps,
-    checkIfVehicleHasMoved,
     getLatestLocation,
     getLastSentLocation,
     clearLocationData,

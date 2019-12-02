@@ -45,7 +45,7 @@ const processSmsAction = async (phoneNumber, smsMessage) => {
         }
 
     } catch (errorMessage) {
-        log.error(`An error occured when attempting to process sms action. ${errorMessage}`);
+        log.error(`Error when attempting to process sms action. Error: ${JSON.stringify(error)} Stack: ${error.stack}`);
     }
 }
 

@@ -3,10 +3,9 @@ const log = require('../log');
 
 const initSmsWatcher = async () => {
     try {
-        log.info('Starting SMS Watcher...');
         await watcher.startSmsInboxWatcher();
     } catch (error) {
-        log.error(`Unhandled error. ${error}`);
+        log.error(`Unhandled error. Error: ${JSON.stringify(error)} Stack: ${error.stack}`);
     }
 };
 
