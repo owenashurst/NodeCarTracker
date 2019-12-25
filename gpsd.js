@@ -10,7 +10,7 @@ const startLoggingGps = () => {
         gpsPipe.stdout.setEncoding('utf8');
         gpsPipe.stdout.on('data', (gpsData) => {
             try {
-                const data = JSON.parse(gpsData);
+                const data = parseGpsData(gpsData);
                 if (data.class === 'TPV' && 
                     data.lat && 
                     data.lon && 
@@ -28,6 +28,18 @@ const startLoggingGps = () => {
       throw error;
     }
 }
+
+const parseGpsData = (data) => {
+    let gpsData;
+
+    try {
+        gpsData = JSON.parse(data);
+    } catch (error) {
+        gpsData = data;
+    }
+
+    return gpsData;
+};
 
 const getLatestLocation = () => {
     if (gpsLocationData.length === 0) return;
