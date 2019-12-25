@@ -19,6 +19,7 @@ const start = async () => {
         smsWatcher.initSmsWatcher();
 
         setInterval(async () => {
+            log.info('Processing latest GPS Data');
             await processLatestGpsData();
         }, 60000);
     } catch (error) {
@@ -33,8 +34,11 @@ const processLatestGpsData = async () => {
         if (!latestLocationData) return;
 
         const hasMoved = gpsService.checkIfVehicleHasMoved();
-        if (!hasMoved) return;
+        if (!hasMoved) {
+            return;
+        }
 
+        // Add additional fields to object for dynamo
         latestLocationData.expiry = dateTime.generateTimeToLiveDateTime();
         latestLocationData.userId = config.USER.USER_ID;
 

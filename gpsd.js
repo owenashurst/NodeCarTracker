@@ -21,11 +21,13 @@ const startLoggingGps = () => {
                 ) {
                     gpsLocationData.push(data);
                 }
-            } catch(error){}
+            } catch(error) {
+                log.error(`Error in data: ${JSON.stringify(error)}`);
+            }
         });
     } catch (error) {
-      log.error(error);
-      throw new Error(`Unable to start gpspipe or parse data: ${error}`);
+      log.error(`Error when monitoring GPSPipe: ${JSON.stringify(error)}`);
+      throw error;
     }
 }
 

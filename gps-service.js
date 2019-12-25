@@ -1,9 +1,13 @@
 const gpsd = require('./gpsd');
+const log = require('./log');
 
 const checkIfVehicleHasMoved = () => {
     try {
         const lastSentLocation = gpsd.getLastSentLocation();
-        if (Object.keys(lastSentLocation).length === 0) return true;
+        if (Object.keys(lastSentLocation).length === 0) {
+            log.info('No data for last sent location');
+            return true;
+        }
 
         const latestLocation = gpsd.getLatestLocation();
 
@@ -23,9 +27,9 @@ const checkIfVehicleHasMoved = () => {
         
         return hasLongitudeDiffered && hasLatitudeDiffered;
     }
-    catch (message) {
-        log.error(`Unable to determine if vehicle has moved. ${message}`);
-        throw new Error(message);
+    catch (error) {
+        log.error(`Eror when determining if vehicle has moved. ${error}`);
+        throw error;
     }
 }
 
