@@ -5,7 +5,7 @@ const initSmsWatcher = async () => {
     try {
         await watcher.startSmsInboxWatcher();
     } catch (error) {
-        log.error(`Unhandled error. Error: ${JSON.stringify(error)} Stack: ${error.stack}`);
+        log.error(`Unhandled error. Error: ${error.message} Stack: ${error.stack}`);
     }
 };
 

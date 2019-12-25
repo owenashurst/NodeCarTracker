@@ -22,11 +22,11 @@ const startLoggingGps = () => {
                     gpsLocationData.push(data);
                 }
             } catch(error) {
-                log.error(`Error in data: ${JSON.stringify(error)}`);
+                log.error(`Error in data. Error: ${error.message} Stack: ${error.stack}`);
             }
         });
     } catch (error) {
-      log.error(`Error when monitoring GPSPipe: ${JSON.stringify(error)}`);
+      log.error(`Error when monitoring GPSPipe: Error: ${error.message} Stack: ${error.stack}`);
       throw error;
     }
 }

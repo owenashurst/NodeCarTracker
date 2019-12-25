@@ -23,7 +23,7 @@ const start = async () => {
             await processLatestGpsData();
         }, 60000);
     } catch (error) {
-        log.error(`Unhandled exception. Error: ${JSON.stringify(error)} Stack: ${error.stack}`);
+        log.error(`Unhandled exception. Error: ${error.message} Stack: ${error.stack}`);
     }
 }
 
@@ -31,7 +31,10 @@ const processLatestGpsData = async () => {
     try {
         const latestLocationData = gpsd.getLatestLocation();
 
-        if (!latestLocationData) return;
+        if (!latestLocationData) {
+            log.info('No latest location data yet');
+            return;
+        }
 
         const hasMoved = gpsService.checkIfVehicleHasMoved();
         if (!hasMoved) {
@@ -57,7 +60,7 @@ const processLatestGpsData = async () => {
                 
                 break;
             }
-            catch (ex) {
+            catch (error) {
                 retryCount++;
 
                 log.error(`Error when uploading location. Retrying... ${retryCount}/5 attempts`);
@@ -65,7 +68,7 @@ const processLatestGpsData = async () => {
                 await wait(5000);
 
                 if (retryCount == maxRetryCount) {
-                    log.error(`Retry count exceeded. Unable to upload location to server. ${ex}`);
+                    log.error(`Retry count exceeded. Unable to upload location to server. Error: ${error.message} Stack: ${error.stack}`);
                     return;
                 }
             }
@@ -75,7 +78,7 @@ const processLatestGpsData = async () => {
         gpsd.clearLocationData();
     }
     catch (error) {
-        log.error(`Unable to upload location data to server. Error: ${JSON.stringify(error)} Stack: ${error.stack}`)
+        log.error(`Unable to upload location data to server. Error: ${error.message} Stack: ${error.stack}`)
     }
 };
 

@@ -28,7 +28,7 @@ const checkIfVehicleHasMoved = () => {
         return hasLongitudeDiffered && hasLatitudeDiffered;
     }
     catch (error) {
-        log.error(`Eror when determining if vehicle has moved. ${error}`);
+        log.error(`Error when determining if vehicle has moved. Error: ${error.message} Stack: ${error.stack}`);
         throw error;
     }
 }
