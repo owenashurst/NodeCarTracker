@@ -8,20 +8,18 @@ const startLoggingGps = () => {
     try {
         const gpsPipe = spawn('gpspipe', ['-w'], {maxBuffer: 1024 * 500});
         gpsPipe.stdout.setEncoding('utf8');
-        gpsPipe.stdout.on('data', (gpsData) => {
+        gpsPipe.stdout.on('data', (data) => {
             try {
-                const data = parseGpsData(gpsData);
-                if (data &&
-                    data.class &&
-                    data.class === 'TPV' && 
-                    data.lat && 
-                    data.lon && 
-                    data.speed && 
-                    data.climb && 
-                    data.alt && 
-                    data.time
+                const gpsDataWithoutInvalidCharacters = data.substring(0, data.length - 1);
+                const gpsData = parseGpsData(gpsDataWithoutInvalidCharacters);
+               
+		        if (gpsData.class &&
+                    gpsData.class === 'TPV' && 
+                    gpsData.lat && 
+                    gpsData.lon && 
+                    gpsData.time
                 ) {
-                    gpsLocationData.push(data);
+                    gpsLocationData.push(gpsData);
                 }
             } catch(error) {}
         });
