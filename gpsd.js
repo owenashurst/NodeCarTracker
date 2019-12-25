@@ -11,7 +11,9 @@ const startLoggingGps = () => {
         gpsPipe.stdout.on('data', (gpsData) => {
             try {
                 const data = parseGpsData(gpsData);
-                if (data.class === 'TPV' && 
+                if (data &&
+                    data.class &&
+                    data.class === 'TPV' && 
                     data.lat && 
                     data.lon && 
                     data.speed && 
