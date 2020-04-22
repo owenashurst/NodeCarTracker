@@ -2,8 +2,8 @@ require('dotenv').config();
 
 module.exports = {
     AWS: {
-        API_URL: process.env.API_URL || 'jpc905lswi.execute-api.eu-west-1.amazonaws.com',
-        API_ENDPOINT: process.env.API_ENDPOINT || '/live/location',
+        API_URL: process.env.API_URL || '',
+        API_ENDPOINT: process.env.API_ENDPOINT || '',
         AWS_DB_EXPIRY: process.env.AWS_DB_EXPIRY || 5
     },
     SMS: {
