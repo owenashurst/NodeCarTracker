@@ -1,5 +1,5 @@
 # NodeCarTracker
-Car Tracker written in NodeJS to be used on the Raspberry Pi with a USB UBLOX GPS Dongle
+Car Tracker written in NodeJS to be used on the Raspberry Pi with a USB UBLOX GPS Dongle and USB Mobile Dongle for internet access and SMS capability.
 
 # Hardware Requirements
 * Internet connection
