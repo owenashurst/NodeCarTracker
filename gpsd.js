@@ -41,29 +41,16 @@ const parseGpsData = (data) => {
     return gpsData;
 };
 
-const getLatestLocation = () => {
-    if (gpsLocationData.length === 0) return;
-
-    return gpsLocationData[gpsLocationData.length - 1];
-};
-
 const getLastSentLocation = () => {
     return lastSentLocation;
 };
 
-const updateLatestSentLocation = (latestLocationData) => {
-    log.info('Updating last sent location');
+const setLatestSentLocation = (latestLocationData) => {
     lastSentLocation = latestLocationData;
-};
-
-const clearLocationData = () => {
-    gpsLocationData = [];  
 };
 
 module.exports = {
     startLoggingGps,
-    getLatestLocation,
     getLastSentLocation,
-    clearLocationData,
-    updateLatestSentLocation
+    setLatestSentLocation
 };

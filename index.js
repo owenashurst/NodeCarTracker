@@ -2,8 +2,8 @@ const gpsd = require('./gpsd');
 const gpsService = require('./gps-service');
 const https = require('./https');
 const config = require('./config');
-const dateTime = require('./dateTime');
-const smsWatcher = require('./SMS/index');
+const dateTime = require('./date-time');
+const smsWatcher = require('./sms/index');
 const log = require('./log');
 
 const wait = (ms) => {
@@ -63,7 +63,7 @@ const processLatestGpsData = async () => {
             catch (error) {
                 retryCount++;
 
-                log.error(`Error when uploading location. Retrying... ${retryCount}/5 attempts`);
+                log.error(`Error when uploading location. Retrying... ${retryCount}/${maxRetryCount} attempts`);
 
                 await wait(5000);
 
@@ -74,8 +74,8 @@ const processLatestGpsData = async () => {
             }
         }
 
-        gpsd.updateLatestSentLocation(latestLocationData);
-        gpsd.clearLocationData();
+        log.info('Updating last sent location');
+        gpsd.setLatestSentLocation(latestLocationData);
     }
     catch (error) {
         log.error(`Unable to upload location data to server. Error: ${error.message} Stack: ${error.stack}`)
