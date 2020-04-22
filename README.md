@@ -4,8 +4,11 @@ Car Tracker written in NodeJS to be used on the Raspberry Pi with a USB UBLOX GP
 # Hardware Requirements
 * Internet connection
 * USB GPS Dongle
+* USB Mobile Dongle (can also use this for internet access).
 
 This application assumes there is an active internet connection as it will attempt to send a POST request to the specified endpoint configured in the .env file.
+
+The app requires you to have a USB Mobile Dongle configured so that text messages are received and saved in the directory set in the SMS_INBOX_DIRECTORY environment variable. The default this is set to is ``/home/pi/sms/inbox``.
 
 # Configuration
 Take a look in config.js to see what environment variables are being used. This project uses dotenv so that you can override any environment variables by creating a .env file in the root of the project and specifying a name and value in a key value format e.g.
